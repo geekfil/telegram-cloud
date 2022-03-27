@@ -4,6 +4,7 @@ from telethon import (
     events,
     utils
 )
+
 from .telegram_config import (
     fetch_app_data,
     directory
@@ -15,6 +16,7 @@ from .utils.utils import (
     target_username_handler,
     session_retriever
 )
+from telethon.tl.types import DocumentAttributeVideo
 
 args = tgcloud_args()
 
@@ -64,7 +66,7 @@ async def main():
 
         if args.path and username:
             try:
-                message = await client.send_file(entity=target_chat, file=open(args.path, 'rb'), caption=args.caption, progress_callback=upload_callback, parse_mode=parse_mode)
+                message = await client.send_file(entity=target_chat, file=open(args.path, 'rb'), caption=args.caption, progress_callback=upload_callback, parse_mode=parse_mode,attributes=(DocumentAttributeVideo(0, 0, 0)))
                 print("File id: {}".format(message.file.id))
             except:
                 print("Something went wrong, make sure the directory path is valid.")
